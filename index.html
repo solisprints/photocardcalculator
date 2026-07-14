@@ -377,6 +377,20 @@
     letter-spacing: 0.08em;
     vertical-align: middle;
   }
+  .rush-note {
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: rgba(232, 90, 140, 0.07);
+    border: 1px dashed rgba(232, 90, 140, 0.3);
+    border-radius: 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .rush-note-icon { flex-shrink: 0; }
 
   /* Compute button */
   .compute-btn {
@@ -674,14 +688,18 @@
 
       <!-- Rush toggle -->
       <div class="field">
-        <label class="toggle-row" id="rushToggle">
+        <label class="toggle-row disabled" id="rushToggle">
           <div class="toggle-text">
-            <div class="toggle-title">Rush order</div>
+            <div class="toggle-title">Rush order <span class="disabled-badge">Unavailable</span></div>
             <div class="toggle-sub">Bumped to the front of the queue · ₱1–3/card by type · ₱120 flat at 51+</div>
           </div>
           <div class="toggle-switch"></div>
-          <input type="checkbox" id="rush">
+          <input type="checkbox" id="rush" disabled>
         </label>
+        <div class="rush-note">
+          <span class="rush-note-icon">⚡</span>
+          <span>We've reached our rush order limit for this week — rush slots are fully booked. Regular orders are still open, and rush will reopen next week. Thanks for understanding! 💜</span>
+        </div>
       </div>
 
       <button class="compute-btn" id="computeBtn">Compute Total →</button>
@@ -1009,6 +1027,7 @@
   const rushInput = document.getElementById('rush');
   rushToggle.addEventListener('click', (e) => {
     e.preventDefault();
+    if (rushToggle.classList.contains('disabled')) return;
     rushInput.checked = !rushInput.checked;
     rushToggle.classList.toggle('active', rushInput.checked);
   });
